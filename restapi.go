@@ -87,7 +87,7 @@ func createStudents(w http.ResponseWriter, r *http.Request) {
 	}
 	s := Student{}
 	json.NewDecoder(r.Body).Decode(&s)
-	tsql := fmt.Sprintf("insert into TestSchema.student (sid, name, Grade) values('%d','%s','%s')", s.ID, s.Name, s.Grade)
+	tsql := fmt.Sprintf("insert into TestSchema.student (Id, name, Grade) values('%d','%s','%s')", s.ID, s.Name, s.Grade)
 	result, err := db.Exec(tsql)
 	if err != nil {
 		fmt.Fprintf(w, ""+err.Error())
@@ -114,7 +114,7 @@ func updateStudents(w http.ResponseWriter, r *http.Request) {
 	s := Student{}
 	json.NewDecoder(r.Body).Decode(&s)
 	// vars := mux.Vars(r)
-	tsql := fmt.Sprintf("update TestSchema.student set name='%s', Grade='%s' where id='%d'", s.Name, s.Grade, s.ID)
+	tsql := fmt.Sprintf("update TestSchema.student set name='%s', Grade='%s' where Id='%d'", s.Name, s.Grade, s.ID)
 	result, err := db.Exec(tsql)
 	if err != nil {
 		fmt.Fprintf(w, ""+err.Error())
@@ -138,7 +138,7 @@ func deleteStudents(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err.Error())
 	}
 	vars := mux.Vars(r)
-	tsql := fmt.Sprintf("delete from TestSchema.student where id='%d';", vars["ID"])
+	tsql := fmt.Sprintf("delete from TestSchema.student where Id='%d';", vars["ID"])
 	result, err := db.Exec(tsql)
 	if err != nil {
 		fmt.Fprintf(w, ""+err.Error())
